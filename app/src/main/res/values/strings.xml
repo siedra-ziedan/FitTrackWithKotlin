@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Kinetic Cardio</string>
+    <string name="splash_subtitle">POWER YOUR PERFORMANCE</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Continue Login</string>
+    <string name="email_placeholder">example@kinetic.com</string>
+    <string name="password_placeholder">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="agree_terms">I agree to the terms and conditions</string>
+    <string name="terms_text">By signing in, you agree to our Terms of Service and Privacy Policy</string>
+    <string name="no_account">Don\'t have an account? Sign Up</string>
+    <string name="error_empty_fields">Please fill in all fields</string>
+
+    <!-- Sign Up Screen -->
+    <string name="signup_title">Sign Up</string>
+    <string name="signup_desc">Create an account to track your fitness journey</string>
+    <string name="username_placeholder">Username</string>
+    <string name="signup_button">Sign Up Now</string>
+    <string name="or_signup_with">Or sign up with</string>
+    <string name="have_account">Already have an account? Login</string>
+
+    <!-- Complete Profile Screen -->
+    <string name="complete_profile_title">Complete Profile</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="age_placeholder">Age</string>
+    <string name="height_placeholder">Height (cm)</string>
+    <string name="current_weight_placeholder">Current Weight (kg)</string>
+    <string name="target_weight_placeholder">Target Weight (kg)</string>
+    <string name="complete_button">Complete</string>
+</resources>
