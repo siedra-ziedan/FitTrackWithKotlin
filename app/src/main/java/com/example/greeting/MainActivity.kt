@@ -1,11 +1,12 @@
 package com.example.greeting
 
-import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,17 +17,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Female
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Male
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,6 +37,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -57,19 +59,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.greeting.ui.theme.DarkBackground
 import com.example.greeting.ui.theme.DarkSurface
 import com.example.greeting.ui.theme.GreetingTheme
 import com.example.greeting.ui.theme.PrimaryOrange
 import com.example.greeting.ui.theme.TextGray
 import com.example.greeting.ui.theme.TextWhite
 import kotlinx.coroutines.delay
-
+import androidx.compose.foundation.border
+import androidx.compose.foundation.text.KeyboardOptions
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +102,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// 1. الشاشة الترحيبية (أيقونة القلب)
+// 1. الشاشة الترحيبية
 @Composable
 fun SplashScreen(navController: NavController) {
     LaunchedEffect(key1 = true) {
@@ -114,7 +119,7 @@ fun SplashScreen(navController: NavController) {
     ) {
         Surface(
             modifier = Modifier.size(120.dp),
-            shape = CircleShape,
+            shape = androidx.compose.foundation.shape.CircleShape,
             color = PrimaryOrange
         ) {
             Icon(
@@ -140,7 +145,7 @@ fun SplashScreen(navController: NavController) {
     }
 }
 
-// 2. شاشة تسجيل الدخول (أيقونة الدمبل/الوزن)
+// 2. شاشة تسجيل الدخول
 @Composable
 fun LoginScreen(navController: NavController) {
     val context = LocalContext.current
@@ -158,7 +163,7 @@ fun LoginScreen(navController: NavController) {
     ) {
         Surface(
             modifier = Modifier.size(80.dp),
-            shape = CircleShape,
+            shape = androidx.compose.foundation.shape.CircleShape,
             color = PrimaryOrange
         ) {
             Icon(
@@ -177,14 +182,7 @@ fun LoginScreen(navController: NavController) {
             label = { Text(stringResource(id = R.string.email_placeholder)) },
             leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = PrimaryOrange,
-                unfocusedBorderColor = TextGray,
-                focusedLabelColor = PrimaryOrange,
-                cursorColor = PrimaryOrange,
-                focusedContainerColor = DarkSurface,
-                unfocusedContainerColor = DarkSurface
-            )
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PrimaryOrange, unfocusedBorderColor = TextGray, focusedLabelColor = PrimaryOrange, cursorColor = PrimaryOrange, focusedContainerColor = DarkSurface, unfocusedContainerColor = DarkSurface)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -196,14 +194,7 @@ fun LoginScreen(navController: NavController) {
             leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = PrimaryOrange,
-                unfocusedBorderColor = TextGray,
-                focusedLabelColor = PrimaryOrange,
-                cursorColor = PrimaryOrange,
-                focusedContainerColor = DarkSurface,
-                unfocusedContainerColor = DarkSurface
-            )
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PrimaryOrange, unfocusedBorderColor = TextGray, focusedLabelColor = PrimaryOrange, cursorColor = PrimaryOrange, focusedContainerColor = DarkSurface, unfocusedContainerColor = DarkSurface)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -255,7 +246,7 @@ fun LoginScreen(navController: NavController) {
     }
 }
 
-// 3. شاشة إنشاء حساب (أيقونة البرق)
+// 3. شاشة إنشاء حساب
 @Composable
 fun SignUpScreen(navController: NavController) {
     val context = LocalContext.current
@@ -267,14 +258,13 @@ fun SignUpScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp)
-            .verticalScroll(rememberScrollState()),
+            .padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Surface(
             modifier = Modifier.size(80.dp),
-            shape = CircleShape,
+            shape = androidx.compose.foundation.shape.CircleShape,
             color = PrimaryOrange
         ) {
             Icon(
@@ -347,138 +337,196 @@ fun SignUpScreen(navController: NavController) {
     }
 }
 
-// 4. شاشة إكمال البيانات (صورة body كخلفية شفافة وحقول تقبل الكتابة)
+// 4. شاشة إكمال البيانات (ممتلئة بالكامل - Sliders داخل صناديق - الوزن حقول صغيرة)
 @Composable
 fun CompleteProfileScreen(navController: NavController) {
     var selectedGender by remember { mutableStateOf("Male") }
-
-    // إضافة متغيرات لتقبل الكتابة في الحقول
-    var age by remember { mutableStateOf("") }
-    var height by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf(24f) }
+    var height by remember { mutableStateOf(170f) }
     var currentWeight by remember { mutableStateOf("") }
     var targetWeight by remember { mutableStateOf("") }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        // الصورة كخلفية شفافة
-        Image(
-            painter = painterResource(id = R.drawable.body),
-            contentDescription = "Body Background",
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.15f), // شفافية الخلفية
-            contentScale = ContentScale.Crop
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(DarkBackground)
+            .padding(24.dp),
+        // توزيع المساحات بالتساوي لملء الشاشة بالكامل بدون فراغات
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
+        // العنوان الرئيسي
+        Text(
+            text = stringResource(id = R.string.start_workout_plan),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextWhite,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
         )
 
-        // المحتوى فوق الخلفية
-        Column(
+        // الجملة التحفيزية
+        Text(
+            text = stringResource(id = R.string.help_us_customize),
+            fontSize = 14.sp,
+            color = TextGray,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        // الخط البرتقالي من فوق
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxWidth()
+                .height(2.dp)
+                .background(PrimaryOrange)
+        )
+
+        // اختيار الجنس (بإطار)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = stringResource(id = R.string.complete_profile_title),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = TextWhite
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // اختيار الجنس
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            OutlinedButton(
+                onClick = { selectedGender = "Female" },
+                modifier = Modifier.weight(1f).height(60.dp),
+                border = BorderStroke(2.dp, if (selectedGender == "Female") PrimaryOrange else TextGray),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent, contentColor = if (selectedGender == "Female") PrimaryOrange else TextGray)
             ) {
-                OutlinedButton(
-                    onClick = { selectedGender = "Male" },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = if (selectedGender == "Male") PrimaryOrange else DarkSurface,
-                        contentColor = TextWhite
-                    ),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(text = stringResource(id = R.string.male))
+                Icon(Icons.Default.Female, contentDescription = "Female", modifier = Modifier.size(24.dp))
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(id = R.string.female), fontSize = 16.sp)
+            }
+
+            OutlinedButton(
+                onClick = { selectedGender = "Male" },
+                modifier = Modifier.weight(1f).height(60.dp),
+                border = BorderStroke(2.dp, if (selectedGender == "Male") PrimaryOrange else TextGray),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent, contentColor = if (selectedGender == "Male") PrimaryOrange else TextGray)
+            ) {
+                Icon(Icons.Default.Male, contentDescription = "Male", modifier = Modifier.size(24.dp))
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(id = R.string.male), fontSize = 16.sp)
+            }
+        }
+
+        // شريط العمر (داخل مستطيل محاط بإطار)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(BorderStroke(1.dp, TextGray), RoundedCornerShape(12.dp))
+                .background(DarkSurface, RoundedCornerShape(12.dp))
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            Column {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(text = stringResource(id = R.string.age), color = TextGray)
+                    Text(text = age.toInt().toString(), color = TextWhite, fontWeight = FontWeight.Bold)
                 }
-                OutlinedButton(
-                    onClick = { selectedGender = "Female" },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = if (selectedGender == "Female") PrimaryOrange else DarkSurface,
-                        contentColor = TextWhite
-                    ),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(text = stringResource(id = R.string.female))
+                Slider(
+                    value = age,
+                    onValueChange = { age = it },
+                    valueRange = 10f..90f,
+                    colors = SliderDefaults.colors(thumbColor = PrimaryOrange, activeTrackColor = PrimaryOrange, inactiveTrackColor = TextGray.copy(alpha = 0.5f)),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+
+        // شريط الطول (داخل مستطيل محاط بإطار - الحد 220)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(BorderStroke(1.dp, TextGray), RoundedCornerShape(12.dp))
+                .background(DarkSurface, RoundedCornerShape(12.dp))
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            Column {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(text = stringResource(id = R.string.height_cm), color = TextGray)
+                    Text(text = "${height.toInt()} cm", color = TextWhite, fontWeight = FontWeight.Bold)
+                }
+                Slider(
+                    value = height,
+                    onValueChange = { height = it },
+                    valueRange = 100f..220f,
+                    colors = SliderDefaults.colors(thumbColor = PrimaryOrange, activeTrackColor = PrimaryOrange, inactiveTrackColor = TextGray.copy(alpha = 0.5f)),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+
+        // حقول الوزن (مربعات صغيرة - الحد الأقصى 200)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            // الوزن الحالي
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(id = R.string.current_weight_kg),
+                    color = TextGray,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    OutlinedTextField(
+                        value = currentWeight,
+                        onValueChange = { newText ->
+                            val filtered = newText.filter { it.isDigit() }
+                            if (filtered.isEmpty()) currentWeight = ""
+                            else if (filtered.toInt() <= 200) currentWeight = filtered
+                        },
+                        modifier = Modifier.width(90.dp),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PrimaryOrange, unfocusedBorderColor = TextGray, cursorColor = PrimaryOrange, focusedContainerColor = DarkSurface, unfocusedContainerColor = DarkSurface)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "kg", color = TextWhite, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.width(24.dp))
 
-            // حقل العمر (لوحة أرقام)
-            OutlinedTextField(
-                value = age,
-                onValueChange = { age = it },
-                label = { Text(stringResource(id = R.string.age_placeholder)) },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PrimaryOrange, unfocusedBorderColor = TextGray, focusedLabelColor = PrimaryOrange, cursorColor = PrimaryOrange, focusedContainerColor = DarkSurface, unfocusedContainerColor = DarkSurface)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // حقل الطول (لوحة أرقام)
-            OutlinedTextField(
-                value = height,
-                onValueChange = { height = it },
-                label = { Text(stringResource(id = R.string.height_placeholder)) },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PrimaryOrange, unfocusedBorderColor = TextGray, focusedLabelColor = PrimaryOrange, cursorColor = PrimaryOrange, focusedContainerColor = DarkSurface, unfocusedContainerColor = DarkSurface)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // حقل الوزن الحالي (لوحة أرقام)
-            OutlinedTextField(
-                value = currentWeight,
-                onValueChange = { currentWeight = it },
-                label = { Text(stringResource(id = R.string.current_weight_placeholder)) },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PrimaryOrange, unfocusedBorderColor = TextGray, focusedLabelColor = PrimaryOrange, cursorColor = PrimaryOrange, focusedContainerColor = DarkSurface, unfocusedContainerColor = DarkSurface)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // حقل الوزن المستهدف (لوحة أرقام)
-            OutlinedTextField(
-                value = targetWeight,
-                onValueChange = { targetWeight = it },
-                label = { Text(stringResource(id = R.string.target_weight_placeholder)) },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PrimaryOrange, unfocusedBorderColor = TextGray, focusedLabelColor = PrimaryOrange, cursorColor = PrimaryOrange, focusedContainerColor = DarkSurface, unfocusedContainerColor = DarkSurface)
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Button(
-                onClick = { navController.navigate("home") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = PrimaryOrange),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text(text = stringResource(id = R.string.complete_button), fontSize = 18.sp, color = TextWhite)
+            // الوزن المستهدف
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(id = R.string.target_weight_kg),
+                    color = TextGray,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    OutlinedTextField(
+                        value = targetWeight,
+                        onValueChange = { newText ->
+                            val filtered = newText.filter { it.isDigit() }
+                            if (filtered.isEmpty()) targetWeight = ""
+                            else if (filtered.toInt() <= 200) targetWeight = filtered
+                        },
+                        modifier = Modifier.width(90.dp),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PrimaryOrange, unfocusedBorderColor = TextGray, cursorColor = PrimaryOrange, focusedContainerColor = DarkSurface, unfocusedContainerColor = DarkSurface)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "kg", color = TextWhite, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                }
             }
+        }
 
-            Spacer(modifier = Modifier.height(24.dp))
+        // زر بدء الحساب
+        Button(
+            onClick = { navController.navigate("home") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = PrimaryOrange),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text(text = stringResource(id = R.string.start_calculation), fontSize = 18.sp, color = TextWhite)
         }
     }
 }

@@ -22,6 +22,7 @@
 
     <!-- Complete Profile Screen -->
     <string name="complete_profile_title">Complete Profile</string>
+    <string name="start_calculation">Start Your journey</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="age_placeholder">Age</string>
@@ -29,4 +30,10 @@
     <string name="current_weight_placeholder">Current Weight (kg)</string>
     <string name="target_weight_placeholder">Target Weight (kg)</string>
     <string name="complete_button">Complete</string>
+    <string name="age">Age</string>
+    <string name="height_cm">Height (cm)</string>
+    <string name="current_weight_kg">Current Weight (kg)</string>
+    <string name="target_weight_kg">Target Weight (kg)</string>
+    <string name="start_workout_plan">Start Your Workout Plan</string>
+    <string name="help_us_customize">Help us customize the right exercises for you and your fitness goals</string>
 </resources>
