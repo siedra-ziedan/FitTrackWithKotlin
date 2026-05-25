@@ -1,12 +1,13 @@
 package com.example.greeting
 
+import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Email
@@ -50,11 +52,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -73,8 +72,7 @@ import com.example.greeting.ui.theme.PrimaryOrange
 import com.example.greeting.ui.theme.TextGray
 import com.example.greeting.ui.theme.TextWhite
 import kotlinx.coroutines.delay
-import androidx.compose.foundation.border
-import androidx.compose.foundation.text.KeyboardOptions
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +93,7 @@ class MainActivity : ComponentActivity() {
                         composable("signup") { SignUpScreen(navController) }
                         composable("complete_profile") { CompleteProfileScreen(navController) }
                         composable("home") { HomeScreen() }
+                        composable("filter") { FilterScreen(navController) }
                     }
                 }
             }
@@ -519,7 +518,7 @@ fun CompleteProfileScreen(navController: NavController) {
 
         // زر بدء الحساب
         Button(
-            onClick = { navController.navigate("home") },
+            onClick = { navController.navigate("filter") },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),

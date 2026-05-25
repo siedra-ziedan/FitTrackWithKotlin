@@ -36,4 +36,19 @@
     <string name="target_weight_kg">Target Weight (kg)</string>
     <string name="start_workout_plan">Start Your Workout Plan</string>
     <string name="help_us_customize">Help us customize the right exercises for you and your fitness goals</string>
+    <!-- Filter Screen Strings -->
+    <string name="filter_subtitle">Discipline. You.</string>
+    <string name="workout_running">Treadmill Running</string>
+    <string name="workout_squat">Box Squats</string>
+    <string name="workout_jumprope">Jump Rope Training</string>
+    <string name="duration_min">20 min</string>
+    <string name="duration_min_15">15 min</string>
+    <string name="duration_min_12">12 min</string>
+    <string name="calories_kcal">300 kcal</string>
+    <string name="calories_kcal_450">450 kcal</string>
+    <string name="calories_kcal_280">280 kcal</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_favorites">Favorites</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_profile">Profile</string>
 </resources>
