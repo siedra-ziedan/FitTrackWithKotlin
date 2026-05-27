@@ -38,6 +38,9 @@
     <string name="menu_favorites">Favorites</string>
     <string name="menu_search">Search</string>
     <string name="menu_profile">Profile</string>
+    <string name="menu_my_exercises">My Exercises</string>
+    <string name="menu_log">Log</string>
+    <string name="menu_dashboard">Dashboard</string>
 
     <!-- Workouts -->
     <string name="workout_running">Treadmill Running</string>

@@ -19,9 +19,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
@@ -73,17 +74,15 @@ data class WorkoutItem(
 
 @Composable
 fun FilterScreen(navController: NavController) {
-    val context = LocalContext.current // مهم جداً لتغيير اللغة
-    var selectedItem by remember { mutableStateOf(0) }
+    val context = LocalContext.current
+    var selectedItem by remember { mutableStateOf(1) } // 1 = My Exercises كتبويب افتراضي
     var selectedFilter by remember { mutableStateOf("All") }
-    var showLanguageDialog by remember { mutableStateOf(false) } // متغير نافذة اللغة
+    var showLanguageDialog by remember { mutableStateOf(false) }
 
-    // قائمة التمارين المفضلة (قابلة للتعديل)
     val favoriteWorkouts = remember { mutableStateListOf<WorkoutItem>() }
 
     val filters = listOf("All", "Cardio", "Strength", "HIIT")
 
-    // قائمة التمارين الأساسية
     val workoutList = listOf(
         WorkoutItem(R.drawable.workout_running, R.string.workout_running, R.string.duration_min, R.string.calories_kcal, "Cardio"),
         WorkoutItem(R.drawable.workout_jumprope, R.string.workout_jumprope, R.string.duration_min_12, R.string.calories_kcal_280, "Cardio"),
@@ -101,7 +100,6 @@ fun FilterScreen(navController: NavController) {
         workoutList.filter { it.category == selectedFilter }
     }
 
-    // دالة لإضافة أو إزالة التمرين من المفضلة
     val toggleFavorite: (WorkoutItem) -> Unit = { workout ->
         if (favoriteWorkouts.contains(workout)) {
             favoriteWorkouts.remove(workout)
@@ -116,20 +114,23 @@ fun FilterScreen(navController: NavController) {
                 containerColor = DarkSurface,
                 contentColor = PrimaryOrange
             ) {
+                // 1. Dashboard (مؤقتاً فارغ)
                 NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Home, contentDescription = null) },
-                    label = { Text(stringResource(id = R.string.menu_home)) },
+                    icon = { Icon(Icons.Filled.Dashboard, contentDescription = null) },
+                    label = { Text(stringResource(id = R.string.menu_dashboard)) },
                     selected = selectedItem == 0,
                     onClick = { selectedItem = 0 },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
+                // 2. My Exercises (يحتوي على الفلترة والتمارين)
                 NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Dashboard, contentDescription = null) },
-                    label = { Text(stringResource(id = R.string.menu_search)) },
+                    icon = { Icon(Icons.Filled.FitnessCenter, contentDescription = null) },
+                    label = { Text(stringResource(id = R.string.menu_my_exercises)) },
                     selected = selectedItem == 1,
                     onClick = { selectedItem = 1 },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
+                // 3. Favorites
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_favorites)) },
@@ -137,11 +138,20 @@ fun FilterScreen(navController: NavController) {
                     onClick = { selectedItem = 2 },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
+                // 4. Log
+                NavigationBarItem(
+                    icon = { Icon(Icons.Filled.DateRange, contentDescription = null) },
+                    label = { Text(stringResource(id = R.string.menu_log)) },
+                    selected = selectedItem == 3,
+                    onClick = { selectedItem = 3 },
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
+                )
+                // 5. Profile
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Person, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_profile)) },
-                    selected = selectedItem == 3,
-                    onClick = { selectedItem = 3 },
+                    selected = selectedItem == 4,
+                    onClick = { selectedItem = 4 },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
             }
@@ -154,9 +164,18 @@ fun FilterScreen(navController: NavController) {
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            // عرض الشاشة حسب التبويب المختار من الشريط السفلي
             when (selectedItem) {
-                0 -> { // تبويب Home
+                0 -> { // تبويب Dashboard (فارغ مؤقتاً)
+                    Spacer(modifier = Modifier.height(100.dp))
+                    Text(
+                        text = stringResource(id = R.string.coming_soon),
+                        color = TextGray,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                1 -> { // تبويب My Exercises (نقلنا له كل الفلترة والتمارين)
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -166,8 +185,6 @@ fun FilterScreen(navController: NavController) {
                             Text(text = stringResource(id = R.string.app_name), fontSize = 28.sp, fontWeight = FontWeight.Bold, color = PrimaryOrange)
                             Text(text = stringResource(id = R.string.filter_subtitle), fontSize = 14.sp, color = TextGray)
                         }
-
-                        // زر الإعدادات المعدل لفتح النافذة
                         IconButton(onClick = { showLanguageDialog = true }) {
                             Icon(imageVector = Icons.Default.Settings, contentDescription = stringResource(id = R.string.settings), tint = TextWhite, modifier = Modifier.size(28.dp))
                         }
@@ -229,7 +246,7 @@ fun FilterScreen(navController: NavController) {
                         }
                     }
                 }
-                else -> { // تبويبات Dashboard و Profile (مؤقتاً)
+                else -> { // تبويبات Log و Profile (مؤقتاً)
                     Spacer(modifier = Modifier.height(100.dp))
                     Text(
                         text = stringResource(id = R.string.coming_soon),
@@ -242,7 +259,7 @@ fun FilterScreen(navController: NavController) {
             }
         }
 
-        // نافذة تغيير اللغة (Dialog)
+        // نافذة تغيير اللغة
         if (showLanguageDialog) {
             AlertDialog(
                 onDismissRequest = { showLanguageDialog = false },
@@ -306,7 +323,6 @@ fun WorkoutCard(workout: WorkoutItem, isFavorite: Boolean, onToggleFavorite: () 
             }
 
             Column(verticalArrangement = Arrangement.SpaceBetween) {
-                // زر القلب (يتغير لونه وأيقونته بناءً على isFavorite)
                 IconButton(onClick = onToggleFavorite) {
                     Icon(
                         imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,

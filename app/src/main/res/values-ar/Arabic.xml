@@ -31,6 +31,8 @@
     <string name="menu_favorites">المفضلة</string>
     <string name="menu_search">لوحة التحكم</string>
     <string name="menu_profile">الملف الشخصي</string>
+    <string name="menu_my_exercises">تماريني</string>
+    <string name="menu_log">السجل</string>
     <string name="workout_running">الجري على السير</string>
     <string name="workout_squat">قرفصاء بالصندوق</string>
     <string name="workout_jumprope">تدريب الحبل</string>
@@ -38,6 +40,7 @@
     <string name="workout_weightlifting">رفع الأثقال</string>
     <string name="workout_pushups">تمارين الضغط</string>
     <string name="workout_swimming">السباحة</string>
+    <string name="menu_dashboard">لوحة التحكم</string>
     <string name="workout_burpees">تمارين البربي</string>
     <string name="duration_min">20 دقيقة</string>
     <string name="duration_min_15">15 دقيقة</string>
