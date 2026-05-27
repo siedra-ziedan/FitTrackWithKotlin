@@ -4,14 +4,14 @@
 
     <!-- Login Screen -->
     <string name="login_title">Continue Login</string>
-    <string name="email_placeholder">example@kinetic.com</string>
+    <string name="email_placeholder">example@gmail.com</string>
     <string name="password_placeholder">Password</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="agree_terms">I agree to the terms</string>
     <string name="terms_text">By signing in, you agree to our Terms</string>
     <string name="no_account">Don\'t have an account? Sign Up</string>
     <string name="error_empty_fields">Please fill in all fields</string>
-
+    <string name="error_invalid_email">Please enter a valid address(@gmail.com)</string>
     <!-- Sign Up Screen -->
     <string name="signup_title">Sign Up</string>
     <string name="signup_desc">Create an account</string>
@@ -69,4 +69,7 @@
     <string name="my_favorites">My Favorites</string>
     <string name="no_favorites">No favorites yet. Tap the heart on a workout to add it here!</string>
     <string name="coming_soon">Coming Soon...</string>
+    <string name="select_language">Select Language</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
 </resources>

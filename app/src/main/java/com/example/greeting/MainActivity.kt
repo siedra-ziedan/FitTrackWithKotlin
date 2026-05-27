@@ -1,5 +1,7 @@
 package com.example.greeting
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -72,7 +74,30 @@ import com.example.greeting.ui.theme.PrimaryOrange
 import com.example.greeting.ui.theme.TextGray
 import com.example.greeting.ui.theme.TextWhite
 import kotlinx.coroutines.delay
+import java.util.Locale
 
+object LocaleHelper {
+    private const val PREF_NAME = "AppPrefs"
+    private const val LANGUAGE_KEY = "app_language"
+
+    fun saveLanguage(context: Context, language: String) {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putString(LANGUAGE_KEY, language).apply()
+    }
+
+    fun getLanguage(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(LANGUAGE_KEY, "en") ?: "en"
+    }
+
+    fun setLocale(context: Context, language: String): Context {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = context.resources.configuration
+        config.setLocale(locale)
+        return context.createConfigurationContext(config)
+    }
+}
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +123,9 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, LocaleHelper.getLanguage(newBase)))
     }
 }
 
@@ -253,7 +281,7 @@ fun SignUpScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val emptyError = stringResource(id = R.string.error_empty_fields)
-
+    val emailError = stringResource(id = R.string.error_invalid_email)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -310,11 +338,13 @@ fun SignUpScreen(navController: NavController) {
         )
 
         Spacer(modifier = Modifier.height(32.dp))
-
         Button(
             onClick = {
                 if (username.isBlank() || email.isBlank() || password.isBlank()) {
                     Toast.makeText(context, emptyError, Toast.LENGTH_SHORT).show()
+                } else if (!email.trim().endsWith("@gmail.com") || email.trim().length <= 10) {
+                    // استخدمنا emailError بدلاً من context.getString
+                    Toast.makeText(context, emailError, Toast.LENGTH_SHORT).show()
                 } else {
                     navController.navigate("complete_profile")
                 }
@@ -326,13 +356,6 @@ fun SignUpScreen(navController: NavController) {
             Text(text = stringResource(id = R.string.signup_button), fontSize = 18.sp, color = TextWhite)
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = stringResource(id = R.string.or_signup_with), color = TextGray)
-
-        Spacer(modifier = Modifier.height(24.dp))
-        TextButton(onClick = { navController.navigate("login") { popUpTo("signup") { inclusive = true } } }) {
-            Text(text = stringResource(id = R.string.have_account), color = PrimaryOrange)
-        }
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.greeting
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,13 +18,14 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -35,6 +37,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -46,6 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -69,8 +73,10 @@ data class WorkoutItem(
 
 @Composable
 fun FilterScreen(navController: NavController) {
+    val context = LocalContext.current // مهم جداً لتغيير اللغة
     var selectedItem by remember { mutableStateOf(0) }
     var selectedFilter by remember { mutableStateOf("All") }
+    var showLanguageDialog by remember { mutableStateOf(false) } // متغير نافذة اللغة
 
     // قائمة التمارين المفضلة (قابلة للتعديل)
     val favoriteWorkouts = remember { mutableStateListOf<WorkoutItem>() }
@@ -118,14 +124,14 @@ fun FilterScreen(navController: NavController) {
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Search, contentDescription = null) },
+                    icon = { Icon(Icons.Filled.Dashboard, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_search)) },
                     selected = selectedItem == 1,
                     onClick = { selectedItem = 1 },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Favorite, contentDescription = null) }, // أيقونة القلب الممتلئ للتبويب
+                    icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_favorites)) },
                     selected = selectedItem == 2,
                     onClick = { selectedItem = 2 },
@@ -160,7 +166,9 @@ fun FilterScreen(navController: NavController) {
                             Text(text = stringResource(id = R.string.app_name), fontSize = 28.sp, fontWeight = FontWeight.Bold, color = PrimaryOrange)
                             Text(text = stringResource(id = R.string.filter_subtitle), fontSize = 14.sp, color = TextGray)
                         }
-                        IconButton(onClick = { }) {
+
+                        // زر الإعدادات المعدل لفتح النافذة
+                        IconButton(onClick = { showLanguageDialog = true }) {
                             Icon(imageVector = Icons.Default.Settings, contentDescription = stringResource(id = R.string.settings), tint = TextWhite, modifier = Modifier.size(28.dp))
                         }
                     }
@@ -214,14 +222,14 @@ fun FilterScreen(navController: NavController) {
                             items(favoriteWorkouts) { workout ->
                                 WorkoutCard(
                                     workout = workout,
-                                    isFavorite = true, // دائماً ممتلئ هنا لأنه في المفضلة
+                                    isFavorite = true,
                                     onToggleFavorite = { toggleFavorite(workout) }
                                 )
                             }
                         }
                     }
                 }
-                else -> { // تبويبات Search و Profile (مؤقتاً)
+                else -> { // تبويبات Dashboard و Profile (مؤقتاً)
                     Spacer(modifier = Modifier.height(100.dp))
                     Text(
                         text = stringResource(id = R.string.coming_soon),
@@ -232,6 +240,37 @@ fun FilterScreen(navController: NavController) {
                     )
                 }
             }
+        }
+
+        // نافذة تغيير اللغة (Dialog)
+        if (showLanguageDialog) {
+            AlertDialog(
+                onDismissRequest = { showLanguageDialog = false },
+                title = { Text(text = stringResource(id = R.string.select_language), color = TextWhite) },
+                text = {
+                    Column {
+                        TextButton(onClick = {
+                            LocaleHelper.saveLanguage(context, "en")
+                            LocaleHelper.setLocale(context, "en")
+                            (context as? Activity)?.recreate()
+                            showLanguageDialog = false
+                        }) {
+                            Text(text = stringResource(id = R.string.english), color = TextWhite, fontSize = 18.sp)
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        TextButton(onClick = {
+                            LocaleHelper.saveLanguage(context, "ar")
+                            LocaleHelper.setLocale(context, "ar")
+                            (context as? Activity)?.recreate()
+                            showLanguageDialog = false
+                        }) {
+                            Text(text = stringResource(id = R.string.arabic), color = PrimaryOrange, fontSize = 18.sp)
+                        }
+                    }
+                },
+                confirmButton = {},
+                containerColor = DarkSurface
+            )
         }
     }
 }
@@ -272,7 +311,7 @@ fun WorkoutCard(workout: WorkoutItem, isFavorite: Boolean, onToggleFavorite: () 
                     Icon(
                         imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = "Favorite",
-                        tint = if (isFavorite) Color.Red else TextGray, // أحمر إذا مفضل، رمادي إذا لا
+                        tint = if (isFavorite) Color.Red else TextGray,
                         modifier = Modifier.size(24.dp)
                     )
                 }
