@@ -75,4 +75,41 @@
     <string name="select_language">Select Language</string>
     <string name="english">English</string>
     <string name="arabic">العربية</string>
+    <!--workoutdetails-->
+    <string name="hiit_title">HIIT Cardio Workout</string>
+
+    <string name="hiit_subtitle">
+High intensity interval training designed to burn calories quickly and improve endurance.
+</string>
+    <string name="workout_timer">WORKOUT TIMER</string>
+    <string name="instructions">Instructions</string>
+
+    <string name="warmup_title">Warm Up</string>
+    <string name="warmup_desc">
+Start with light jogging and stretching for 5 minutes.
+</string>
+
+    <string name="sprint_title">Sprint Session</string>
+    <string name="sprint_desc">
+Run at maximum speed for 30 seconds then walk for 1 minute.
+</string>
+
+    <string name="rest_title">Recovery</string>
+    <string name="rest_desc">
+Take deep breaths and hydrate before repeating the cycle.
+</string>
+
+    <string name="performance_tip">
+Drink water regularly during the workout to maintain performance and avoid dehydration.
+</string>
+
+    <string name="start_now">Start Workout</string>
+
+    <string name="calories">Calories</string>
+
+    <string name="intensity">Intensity</string>
+
+    <string name="duration">Duration</string>
+
+    <string name="high">High</string>
 </resources>

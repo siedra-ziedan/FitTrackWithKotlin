@@ -119,6 +119,7 @@ class MainActivity : ComponentActivity() {
                         composable("complete_profile") { CompleteProfileScreen(navController) }
                         composable("home") { HomeScreen() }
                         composable("filter") { FilterScreen(navController) }
+                        composable("details") { WorkoutDetailsScreen()  }
                     }
                 }
             }

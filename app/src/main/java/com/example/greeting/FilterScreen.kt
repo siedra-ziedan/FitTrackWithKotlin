@@ -211,7 +211,8 @@ fun FilterScreen(navController: NavController) {
                             WorkoutCard(
                                 workout = workout,
                                 isFavorite = favoriteWorkouts.contains(workout),
-                                onToggleFavorite = { toggleFavorite(workout) }
+                                onToggleFavorite = { toggleFavorite(workout)},
+                                navController=navController
                             )
                         }
                     }
@@ -240,7 +241,8 @@ fun FilterScreen(navController: NavController) {
                                 WorkoutCard(
                                     workout = workout,
                                     isFavorite = true,
-                                    onToggleFavorite = { toggleFavorite(workout) }
+                                    onToggleFavorite = { toggleFavorite(workout) },
+                                    navController=navController
                                 )
                             }
                         }
@@ -293,7 +295,7 @@ fun FilterScreen(navController: NavController) {
 }
 
 @Composable
-fun WorkoutCard(workout: WorkoutItem, isFavorite: Boolean, onToggleFavorite: () -> Unit) {
+fun WorkoutCard(workout: WorkoutItem,isFavorite: Boolean,onToggleFavorite: () -> Unit,navController: NavController) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -332,7 +334,19 @@ fun WorkoutCard(workout: WorkoutItem, isFavorite: Boolean, onToggleFavorite: () 
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play", tint = PrimaryOrange, modifier = Modifier.size(32.dp))
+                IconButton(
+                    onClick = {
+                        navController.navigate("details")
+                    }
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = "Play",
+                        tint = PrimaryOrange,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
             }
         }
     }
