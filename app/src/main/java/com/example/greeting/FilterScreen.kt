@@ -246,7 +246,7 @@ fun FilterScreen(navController: NavController) {
                         }
                     }
                 }
-                else -> { // تبويبات Log و Profile (مؤقتاً)
+                3 -> { // تبويب Log
                     Spacer(modifier = Modifier.height(100.dp))
                     Text(
                         text = stringResource(id = R.string.coming_soon),
@@ -255,6 +255,9 @@ fun FilterScreen(navController: NavController) {
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
+                }
+                4 -> { // تبويب Profile
+                    ProfileScreen()
                 }
             }
         }

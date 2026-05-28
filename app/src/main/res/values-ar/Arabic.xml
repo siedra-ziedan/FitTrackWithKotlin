@@ -64,4 +64,18 @@
     <string name="select_language">اختر اللغة</string>
     <string name="english">English</string>
     <string name="arabic">العربية</string>
+    <!-- Profile Screen -->
+    <string name="profile_title">الملف الشخصي</string>
+    <string name="default_username">اسم المستخدم</string>
+    <string name="hours">الساعات</string>
+    <string name="calories_profile">السعرات</string>
+    <string name="exercises">التمارين</string>
+    <string name="vital_metrics">المقاييس الحيوية</string>
+    <string name="age_years">%1$s عام</string>
+    <string name="weight_kg">%1$s كجم</string>
+    <string name="height_cm_profile">%1$s سم</string>
+    <string name="edit_profile">تعديل البيانات</string>
+    <string name="weekly_stats">إحصائياتي الأسبوعية</string>
+    <string name="settings_profile">الإعدادات</string>
+    <string name="logout">تسجيل الخروج</string>
 </resources>

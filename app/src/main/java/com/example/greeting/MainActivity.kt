@@ -76,9 +76,14 @@ import com.example.greeting.ui.theme.TextWhite
 import kotlinx.coroutines.delay
 import java.util.Locale
 
+
 object LocaleHelper {
     private const val PREF_NAME = "AppPrefs"
     private const val LANGUAGE_KEY = "app_language"
+    private const val HEIGHT_KEY = "user_height"
+    private const val WEIGHT_KEY = "user_weight"
+    private const val USERNAME_KEY = "user_username" // جديد
+    private const val AGE_KEY = "user_age"           // جديد
 
     fun saveLanguage(context: Context, language: String) {
         val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -96,6 +101,36 @@ object LocaleHelper {
         val config = context.resources.configuration
         config.setLocale(locale)
         return context.createConfigurationContext(config)
+    }
+
+    fun saveUserMetrics(context: Context, heightCm: String, weightKg: String, age: String) {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putString(HEIGHT_KEY, heightCm).putString(WEIGHT_KEY, weightKg).putString(AGE_KEY, age).apply()
+    }
+
+    fun saveUsername(context: Context, username: String) {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putString(USERNAME_KEY, username).apply()
+    }
+
+    fun getHeight(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(HEIGHT_KEY, "") ?: ""
+    }
+
+    fun getWeight(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(WEIGHT_KEY, "") ?: ""
+    }
+
+    fun getAge(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(AGE_KEY, "") ?: ""
+    }
+
+    fun getUsername(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(USERNAME_KEY, "") ?: ""
     }
 }
 class MainActivity : ComponentActivity() {
@@ -346,6 +381,7 @@ fun SignUpScreen(navController: NavController) {
                     // استخدمنا emailError بدلاً من context.getString
                     Toast.makeText(context, emailError, Toast.LENGTH_SHORT).show()
                 } else {
+                    LocaleHelper.saveUsername(context, username)
                     navController.navigate("complete_profile")
                 }
             },
@@ -362,6 +398,7 @@ fun SignUpScreen(navController: NavController) {
 // 4. شاشة إكمال البيانات (ممتلئة بالكامل - Sliders داخل صناديق - الوزن حقول صغيرة)
 @Composable
 fun CompleteProfileScreen(navController: NavController) {
+    val context = LocalContext.current
     var selectedGender by remember { mutableStateOf("Male") }
     var age by remember { mutableStateOf(24f) }
     var height by remember { mutableStateOf(170f) }
@@ -541,10 +578,21 @@ fun CompleteProfileScreen(navController: NavController) {
 
         // زر بدء الحساب
         Button(
-            onClick = { navController.navigate("filter") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
+            onClick = {
+
+                // حفظ الطول والوزن الحالي والعمر
+                LocaleHelper.saveUserMetrics(
+                    context,
+                    heightCm = height.toInt().toString(), // الطول من الـ Slider
+                    weightKg = currentWeight,             // الوزن من حقل الإدخال
+                    age = age.toInt().toString()          // العمر من الـ Slider
+                )
+
+                navController.navigate("filter") {
+                    popUpTo("complete_profile") { inclusive = true }
+                }
+            },
+            modifier = Modifier.fillMaxWidth().height(50.dp),
             colors = ButtonDefaults.buttonColors(containerColor = PrimaryOrange),
             shape = RoundedCornerShape(8.dp)
         ) {
