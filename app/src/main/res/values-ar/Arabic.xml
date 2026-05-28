@@ -64,18 +64,43 @@
     <string name="select_language">اختر اللغة</string>
     <string name="english">English</string>
     <string name="arabic">العربية</string>
-    <!-- Profile Screen -->
-    <string name="profile_title">الملف الشخصي</string>
-    <string name="default_username">اسم المستخدم</string>
-    <string name="hours">الساعات</string>
-    <string name="calories_profile">السعرات</string>
-    <string name="exercises">التمارين</string>
-    <string name="vital_metrics">المقاييس الحيوية</string>
-    <string name="age_years">%1$s عام</string>
-    <string name="weight_kg">%1$s كجم</string>
-    <string name="height_cm_profile">%1$s سم</string>
-    <string name="edit_profile">تعديل البيانات</string>
-    <string name="weekly_stats">إحصائياتي الأسبوعية</string>
-    <string name="settings_profile">الإعدادات</string>
-    <string name="logout">تسجيل الخروج</string>
+    <string name="hiit_title">تمرين كارديو عالي الشدة</string>
+
+    <string name="hiit_subtitle">
+تمرين عالي الشدة يساعد على حرق السعرات بسرعة وتحسين اللياقة والتحمل.
+</string>
+    <string name="workout_timer">مؤقت التمرين</string>
+    <string name="instructions">التعليمات</string>
+
+    <string name="warmup_title">الإحماء</string>
+
+    <string name="warmup_desc">
+ابدأ بالجري الخفيف وتمارين التمدد لمدة 5 دقائق.
+</string>
+
+    <string name="sprint_title">الجري السريع</string>
+
+    <string name="sprint_desc">
+اركض بأقصى سرعة لمدة 30 ثانية ثم امشِ لمدة دقيقة.
+</string>
+
+    <string name="rest_title">الاستراحة</string>
+
+    <string name="rest_desc">
+خذ نفسًا عميقًا واشرب الماء قبل إعادة التمرين.
+</string>
+
+    <string name="performance_tip">
+اشرب الماء باستمرار أثناء التمرين للحفاظ على الأداء وتجنب الجفاف.
+</string>
+
+    <string name="start_now">ابدأ التمرين</string>
+
+    <string name="calories">السعرات</string>
+
+    <string name="intensity">الشدة</string>
+
+    <string name="duration">المدة</string>
+
+    <string name="high">عالية</string>
 </resources>
