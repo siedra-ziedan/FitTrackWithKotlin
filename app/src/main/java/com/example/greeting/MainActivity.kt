@@ -19,6 +19,10 @@ import java.util.Locale
 object LocaleHelper {
     private const val PREF_NAME = "AppPrefs"
     private const val LANGUAGE_KEY = "app_language"
+    private const val HEIGHT_KEY = "user_height"
+    private const val WEIGHT_KEY = "user_weight"
+    private const val USERNAME_KEY = "user_username" // جديد
+    private const val AGE_KEY = "user_age"           // جديد
 
     fun saveLanguage(context: Context, language: String) {
         val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -37,8 +41,36 @@ object LocaleHelper {
         config.setLocale(locale)
         return context.createConfigurationContext(config)
     }
-}
 
+    fun saveUserMetrics(context: Context, heightCm: String, weightKg: String, age: String) {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putString(HEIGHT_KEY, heightCm).putString(WEIGHT_KEY, weightKg).putString(AGE_KEY, age).apply()
+    }
+    fun saveUsername(context: Context, username: String) {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putString(USERNAME_KEY, username).apply()
+    }
+
+    fun getHeight(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(HEIGHT_KEY, "") ?: ""
+    }
+
+    fun getWeight(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(WEIGHT_KEY, "") ?: ""
+    }
+
+    fun getAge(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(AGE_KEY, "") ?: ""
+    }
+
+    fun getUsername(context: Context): String {
+        val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(USERNAME_KEY, "") ?: ""
+    }
+}
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

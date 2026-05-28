@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,9 +49,10 @@ import com.example.greeting.ui.theme.DarkSurface
 import com.example.greeting.ui.theme.PrimaryOrange
 import com.example.greeting.ui.theme.TextGray
 import com.example.greeting.ui.theme.TextWhite
-
+import android.widget.Toast
 @Composable
 fun CompleteProfileScreen(navController: NavController) {
+    val context = LocalContext.current
     var selectedGender by remember { mutableStateOf("Male") }
     var age by remember { mutableStateOf(24f) }
     var height by remember { mutableStateOf(170f) }
@@ -218,16 +220,30 @@ fun CompleteProfileScreen(navController: NavController) {
             }
         }
 
+
+        // زر بدء الحساب
+
         Button(
             onClick = {
-                // التعديل هنا: التوجيه لشاشة التبويبات ومنع الرجوع للخلف نهائياً
-                navController.navigate("main_app") {
-                    popUpTo("splash") { inclusive = true }
+                // تحقق إن المستخدم حط وزن
+                if (currentWeight.isBlank()) {
+                    Toast.makeText(context, "Please enter your current weight", Toast.LENGTH_SHORT).show()
+                } else {
+                    // حفظ البيانات
+                    LocaleHelper.saveUserMetrics(
+                        context,
+                        heightCm = height.toInt().toString(),
+                        weightKg = currentWeight,
+                        age = age.toInt().toString()
+                    )
+
+                    // الانتقال للشاشة الرئيسية (المسار الصح هو main_app)
+                    navController.navigate("main_app") {
+                        popUpTo("complete_profile") { inclusive = true }
+                    }
                 }
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
+            modifier = Modifier.fillMaxWidth().height(50.dp),
             colors = ButtonDefaults.buttonColors(containerColor = PrimaryOrange),
             shape = RoundedCornerShape(8.dp)
         ) {
@@ -235,3 +251,4 @@ fun CompleteProfileScreen(navController: NavController) {
         }
     }
 }
+

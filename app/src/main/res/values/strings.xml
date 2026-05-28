@@ -112,4 +112,19 @@ Drink water regularly during the workout to maintain performance and avoid dehyd
     <string name="duration">Duration</string>
 
     <string name="high">High</string>
+    <!-- Profile Screen -->
+    <string name="profile_title">Profile</string>
+    <string name="default_username">User Name</string>
+    <string name="hours">Hours</string>
+    <string name="calories_profile">Calories</string>
+    <string name="exercises">Exercises</string>
+    <string name="vital_metrics">Vital Metrics</string>
+    <string name="age_years">%1$s years</string>
+    <string name="weight_kg">%1$s kg</string>
+    <string name="height_cm_profile">%1$s cm</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="weekly_stats">My Weekly Stats</string>
+    <string name="settings_profile">Settings</string>
+    <string name="logout">Logout</string>
+
 </resources>

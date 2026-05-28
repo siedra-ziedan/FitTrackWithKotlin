@@ -115,6 +115,9 @@ fun SignUpScreen(navController: NavController) {
                 } else if (!email.trim().endsWith("@gmail.com") || email.trim().length <= 10) {
                     Toast.makeText(context, emailError, Toast.LENGTH_SHORT).show()
                 } else {
+                    // حفظ اسم المستخدم قبل الانتقال
+                    LocaleHelper.saveUsername(context, username)
+
                     navController.navigate("complete_profile")
                 }
             },
