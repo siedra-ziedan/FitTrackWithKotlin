@@ -158,10 +158,11 @@ fun FilterScreen(navController: NavController) {
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier
+            modifier = Modifier.padding(top = 12.dp )
                 .fillMaxSize()
                 .background(DarkBackground)
-                .padding(paddingValues)
+                .padding(top = 8.dp,
+                bottom = paddingValues.calculateBottomPadding())
                 .padding(16.dp)
         ) {
             when (selectedItem) {

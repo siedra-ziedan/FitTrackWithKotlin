@@ -62,21 +62,21 @@ fun DashboardScreen() {
             .fillMaxSize()
             .background(DarkBackground)
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 18.dp)
+
     ) {
 
-        Spacer(modifier = Modifier.height(18.dp))
+
 
         // HEADER
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal =10.dp, vertical = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
             Text(
-                text = "KINETIC CARDIO ⚡",
+                text = "Kinetic Cardio ⚡",
                 color = PrimaryOrange,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 24.sp,
@@ -87,7 +87,8 @@ fun DashboardScreen() {
             IconButton(
                 onClick = {
                     showLanguageDialog = true
-                }
+                },
+                modifier = Modifier.offset(y = -4.dp)
             ) {
 
                 Icon(

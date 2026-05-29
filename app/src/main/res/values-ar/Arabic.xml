@@ -33,7 +33,7 @@
     <string name="menu_profile">الملف الشخصي</string>
     <string name="menu_my_exercises">تماريني</string>
     <string name="menu_log">السجل</string>
-    <string name="workout_running">الجري على السير</string>
+    <string name="workout_running">الجري على الجهاز</string>
     <string name="workout_squat">قرفصاء بالصندوق</string>
     <string name="workout_jumprope">تدريب الحبل</string>
     <string name="workout_cycling">ركوب الدراجات</string>
