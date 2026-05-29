@@ -114,7 +114,7 @@ fun FilterScreen(navController: NavController) {
                 containerColor = DarkSurface,
                 contentColor = PrimaryOrange
             ) {
-                // 1. Dashboard (مؤقتاً فارغ)
+                // 1. Dashboard (يحوي احصائيات اسبوعية للتمارين والوزن الحالي والمستهدف)
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Dashboard, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_dashboard)) },
@@ -165,15 +165,7 @@ fun FilterScreen(navController: NavController) {
                 .padding(16.dp)
         ) {
             when (selectedItem) {
-                0 -> { // تبويب Dashboard (فارغ مؤقتاً)
-                    Spacer(modifier = Modifier.height(100.dp))
-                    Text(
-                        text = stringResource(id = R.string.coming_soon),
-                        color = TextGray,
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                0 -> { DashboardScreen()
                 }
                 1 -> { // تبويب My Exercises (نقلنا له كل الفلترة والتمارين)
                     Row(

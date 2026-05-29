@@ -55,7 +55,7 @@ fun ProfileScreen() {
             fontWeight = FontWeight.Bold,
             color = PrimaryOrange,
             modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.End
+            textAlign = TextAlign.Start
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -144,7 +144,7 @@ fun StatCard(title: String, value: String, progress: Float, modifier: Modifier =
                         .fillMaxHeight()
                         .fillMaxWidth(progress) // مقدار الامتلاء (من 0.0f إلى 1.0f)
                         .clip(RoundedCornerShape(3.dp))
-                        .background(PrimaryOrange) // لون الخط المعبأ (برتقالي)
+                        .background(Color(0xFFFC9B7F)) // لون الخط المعبأ (برتقالي)
                 )
             }
         }
@@ -181,6 +181,6 @@ fun ProfileOptionItem(icon: androidx.compose.ui.graphics.vector.ImageVector, tit
     ) {
         Icon(icon, contentDescription = title, tint = tint, modifier = Modifier.size(24.dp))
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = title, color = tint, fontSize = 18.sp, fontWeight = FontWeight.Medium)
+        Text(text = title, color = tint, fontSize =16.sp, fontWeight = FontWeight.Medium)
     }
 }

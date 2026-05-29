@@ -117,5 +117,24 @@
     <string name="weekly_stats">إحصائياتي الأسبوعية</string>
     <string name="settings_profile">الإعدادات</string>
     <string name="logout">تسجيل الخروج</string>
+    <!--dashboard-->
+    <string name="hello">أهلًا،</string>
+    <string name="goal_remaining">أنت على بعد %1$d سعرة حرارية من هدفك اليومي</string>
+    <string name="goal">الهدف</string>
+    <string name="week_activity">نشاط الأسبوع</string>
+    <string name="total_workouts">إجمالي التمارين</string>
+    <string name="this_week">هذا الأسبوع</string>
+    <string name="caloriees">سعرة</string>
+    <string name="current_weight">الوزن الحالي</string>
+    <string name="start">البداية:</string>
+    <string name="active_calories">السعرات النشطة</string>
+    <string name="kg">كجم</string>
+    <string name="sat">السبت</string>
+    <string name="sun">الأحد</string>
+    <string name="mon">الاثنين</string>
+    <string name="tue">الثلاثاء</string>
+    <string name="wed">الأربعاء</string>
+    <string name="thu">الخميس</string>
+    <string name="fri">الجمعة</string>
 
 </resources>

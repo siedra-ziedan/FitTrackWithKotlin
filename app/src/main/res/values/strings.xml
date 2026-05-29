@@ -126,5 +126,24 @@ Drink water regularly during the workout to maintain performance and avoid dehyd
     <string name="weekly_stats">My Weekly Stats</string>
     <string name="settings_profile">Settings</string>
     <string name="logout">Logout</string>
+    <!--dashboard-->
+    <string name="hello">Hello,</string>
+    <string name="goal_remaining">You are %1$d calories away from your daily goal</string>
+    <string name="goal">Goal</string>
+    <string name="week_activity">Week Activity</string>
+    <string name="total_workouts">Total Workouts</string>
+    <string name="this_week">this week</string>
+    <string name="caloriees">Calories</string>
+    <string name="current_weight">Current Weight</string>
+    <string name="start">Start:</string>
+    <string name="active_calories">Active Calories</string>
+    <string name="kg">kg</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
 
 </resources>
