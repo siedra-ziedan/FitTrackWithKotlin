@@ -126,7 +126,7 @@
     <string name="this_week">هذا الأسبوع</string>
     <string name="caloriees">سعرة</string>
     <string name="current_weight">الوزن الحالي</string>
-    <string name="start">البداية:</string>
+    <string name="start">البداية</string>
     <string name="active_calories">السعرات النشطة</string>
     <string name="kg">كجم</string>
     <string name="sat">السبت</string>
@@ -136,6 +136,10 @@
     <string name="wed">الأربعاء</string>
     <string name="thu">الخميس</string>
     <string name="fri">الجمعة</string>
+    <string name="daily_goal">الهدف</string>
+    <string name="goal_completed">تم تحقيق الهدف 🎉</string>
+    <string name="great_progress">تقدم رائع 🔥</string>
+    <string name="keep_pushing">استمر 💪</string>
     <!-- Log Screen -->
     <string name="exercise_log_this_month">سجل التمارين </string>
     <string name="october_2026">أكتوبر ٢٠٢٦</string>

@@ -108,8 +108,8 @@ fun ProfileScreen(navController: NavController) {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             MetricCard(title = stringResource(id = R.string.age), value = "${savedAge.ifEmpty { "0" }} years", modifier = Modifier.weight(1f))
-            MetricCard(title = "Weight", value = "${savedWeight.ifEmpty { "0" }} kg", modifier = Modifier.weight(1f))
-            MetricCard(title = "Height", value = "${savedHeight.ifEmpty { "0" }} cm", modifier = Modifier.weight(1f))
+            MetricCard(title = "Weight", value = "${savedWeight.ifEmpty { "0" }}\n kg", modifier = Modifier.weight(1f))
+            MetricCard(title = "Height", value = "${savedHeight.ifEmpty { "0" }}\n cm", modifier = Modifier.weight(1f))
         }
 
         Spacer(modifier = Modifier.height(24.dp))

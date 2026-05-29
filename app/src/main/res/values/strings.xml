@@ -135,7 +135,7 @@ Drink water regularly during the workout to maintain performance and avoid dehyd
     <string name="this_week">this week</string>
     <string name="caloriees">Calories</string>
     <string name="current_weight">Current Weight</string>
-    <string name="start">Start:</string>
+    <string name="start">Start</string>
     <string name="active_calories">Active Calories</string>
     <string name="kg">kg</string>
     <string name="sat">Sat</string>
@@ -145,6 +145,10 @@ Drink water regularly during the workout to maintain performance and avoid dehyd
     <string name="wed">Wed</string>
     <string name="thu">Thu</string>
     <string name="fri">Fri</string>
+    <string name="daily_goal">Goal</string>
+    <string name="goal_completed">Goal completed 🎉</string>
+    <string name="great_progress">Great progress 🔥</string>
+    <string name="keep_pushing">Keep pushing 💪</string>
     <!-- Log Screen -->
     <string name="exercise_log_this_month">Exercise Log </string>
     <string name="october_2026">October 2026</string>

@@ -173,7 +173,7 @@ fun CalendarRow(days: List<Int>, selectedDay: Int, onDaySelected: (Int) -> Unit)
                     .weight(1f)
                     .size(36.dp)
                     .clip(CircleShape)
-                    .background(if (day == selectedDay) PrimaryOrange else Color.Transparent)
+                    .background(if (day == selectedDay) Color(0xFFFDA48F) else Color.Transparent)
                     .clickable(enabled = day != 0) { onDaySelected(day) },
                 contentAlignment = Alignment.Center
             ) {

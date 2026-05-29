@@ -23,7 +23,8 @@ object LocaleHelper {
     private const val WEIGHT_KEY = "user_weight"
     private const val USERNAME_KEY = "user_username" // جديد
     private const val AGE_KEY = "user_age"           // جديد
-
+    private const val DAILY_GOAL_KEY = "daily_goal"
+    private const val CURRENT_PROGRESS_KEY = "current_progress"
     fun saveLanguage(context: Context, language: String) {
         val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         prefs.edit().putString(LANGUAGE_KEY, language).apply()
@@ -69,6 +70,37 @@ object LocaleHelper {
     fun getUsername(context: Context): String {
         val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         return prefs.getString(USERNAME_KEY, "") ?: ""
+    }
+    fun saveDailyGoal(context: Context, goal: String) {
+
+        val prefs: SharedPreferences =
+            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
+        prefs.edit().putString(DAILY_GOAL_KEY, goal).apply()
+    }
+
+    fun getDailyGoal(context: Context): String {
+
+        val prefs: SharedPreferences =
+            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
+        return prefs.getString(DAILY_GOAL_KEY, "600") ?: "600"
+    }
+
+    fun saveCurrentProgress(context: Context, progress: String) {
+
+        val prefs: SharedPreferences =
+            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
+        prefs.edit().putString(CURRENT_PROGRESS_KEY, progress).apply()
+    }
+
+    fun getCurrentProgress(context: Context): String {
+
+        val prefs: SharedPreferences =
+            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
+        return prefs.getString(CURRENT_PROGRESS_KEY, "420") ?: "420"
     }
 }
 class MainActivity : ComponentActivity() {

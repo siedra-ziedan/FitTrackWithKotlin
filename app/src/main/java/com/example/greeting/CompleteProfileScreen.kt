@@ -225,16 +225,36 @@ fun CompleteProfileScreen(navController: NavController) {
 
         Button(
             onClick = {
+
                 // تحقق إن المستخدم حط وزن
                 if (currentWeight.isBlank()) {
                     Toast.makeText(context, "Please enter your current weight", Toast.LENGTH_SHORT).show()
                 } else {
+                    val calculatedGoal = when {
+
+                        currentWeight.toInt() >= 100 -> 900
+
+                        currentWeight.toInt() >= 80 -> 750
+
+                        currentWeight.toInt() >= 60 -> 600
+
+                        else -> 450
+                    }
                     // حفظ البيانات
                     LocaleHelper.saveUserMetrics(
                         context,
                         heightCm = height.toInt().toString(),
                         weightKg = currentWeight,
                         age = age.toInt().toString()
+                    )
+                    LocaleHelper.saveDailyGoal(
+                        context,
+                        calculatedGoal.toString()
+                    )
+
+                    LocaleHelper.saveCurrentProgress(
+                        context,
+                        "420"
                     )
 
                     // الانتقال للشاشة الرئيسية (المسار الصح هو main_app)

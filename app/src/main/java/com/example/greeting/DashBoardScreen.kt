@@ -40,6 +40,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.ui.graphics.Brush
 @Composable
 fun DashboardScreen() {
 
@@ -132,7 +134,10 @@ fun DashboardScreen() {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
+        //Daily Goal
+        GoalCard()
 
+        Spacer(modifier = Modifier.height(16.dp))
         // WEEK ACTIVITY
 
         WeeklyActivityCard()
@@ -211,6 +216,116 @@ fun DashboardScreen() {
 
             containerColor = DarkSurface
         )
+    }
+}
+
+@Composable
+fun GoalCard() {
+    val context = LocalContext.current
+
+    val goal =
+        LocaleHelper.getDailyGoal(context).toFloat()
+
+    val progress =
+        LocaleHelper.getCurrentProgress(context).toFloat()
+
+    val percentage = (progress / goal)
+
+    val message = when {
+
+        percentage >= 1f ->
+            stringResource(id = R.string.goal_completed)
+
+        percentage >= 0.7f ->
+            stringResource(id = R.string.great_progress)
+
+        else ->
+            stringResource(id = R.string.keep_pushing)
+    }
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = DarkSurface
+        )
+    ) {
+
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement =
+                    Arrangement.SpaceBetween,
+                verticalAlignment =
+                    Alignment.CenterVertically
+            ) {
+
+                Column {
+
+                    Text(
+                        text = stringResource(id = R.string.daily_goal),
+                        color = TextWhite,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "$progress / $goal kcal",
+                        color = TextGray,
+                        fontSize = 14.sp
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .size(52.dp)
+                        .background(
+                            brush = Brush.linearGradient(
+                                listOf(
+                                    PrimaryOrange,
+                                    Color(0xFFFFB74D)
+                                )
+                            ),
+                            shape = CircleShape
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+
+                    Text(
+                        text = "${(percentage * 100).toInt()}%",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            LinearProgressIndicator(
+                progress = { percentage },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(10.dp)
+                    .clip(RoundedCornerShape(50.dp)),
+                color = Color(0xFFFFC7B5),
+                trackColor = Color(0xFF4A4A4A)
+            )
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            Text(
+                text = message,
+                color = Color(0xFF64B5F6),
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium
+            )
+        }
     }
 }
 
@@ -498,17 +613,21 @@ fun WeightCard(weight: String) {
             ) {
 
                 Text(
-                    text = "${stringResource(id = R.string.start)} 85 ${stringResource(id = R.string.kg)}",
+                    text = "${stringResource(id = R.string.start)} ",
                     color = TextGray,
                     fontSize = 14.sp
                 )
 
                 Text(
-                    text = "${stringResource(id = R.string.goal)} 75 ${stringResource(id = R.string.kg)}",
+                    text = "${stringResource(id = R.string.goal)} ",
                     color = TextGray,
                     fontSize = 14.sp
                 )
             }
+
+
+
         }
     }
+
 }
