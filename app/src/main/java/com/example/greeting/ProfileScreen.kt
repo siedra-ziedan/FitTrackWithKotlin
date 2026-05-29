@@ -1,7 +1,9 @@
 package com.example.greeting
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -12,6 +14,10 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,17 +30,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController // <--- ضفتي هاد الاستيراد المهم
 import com.example.greeting.ui.theme.*
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navController: NavController) {
     val context = LocalContext.current
+    var showLanguageDialog by remember { mutableStateOf(false) }
 
     // جلب البيانات المحفوظة
     val savedHeight = LocaleHelper.getHeight(context)
     val savedWeight = LocaleHelper.getWeight(context)
     val savedAge = LocaleHelper.getAge(context)
-    val savedUsername = LocaleHelper.getUsername(context).ifEmpty { "User Name" } // إذا ما في اسم، حط قيمة افتراضية
+    val savedUsername = LocaleHelper.getUsername(context).ifEmpty { "User Name" }
 
     // بيانات مؤقتة للبطاقات العلوية
     val hoursValue = 11
@@ -65,17 +73,15 @@ fun ProfileScreen() {
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // تعديل الصورة لتصير من الـ drawable
             Image(
-                painter = painterResource(id = R.drawable.profile), // <-- هنا صورتك
+                painter = painterResource(id = R.drawable.profile),
                 contentDescription = "Profile Image",
                 modifier = Modifier
                     .size(100.dp)
-                    .clip(CircleShape), // قص الصورة لتصير دائرية
-                contentScale = ContentScale.Crop // عشان الصورة تملأ الدائر بدون ما تتشوه
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(12.dp))
-            // عرض الاسم المحفوظ
             Text(text = savedUsername, color = TextWhite, fontSize = 22.sp, fontWeight = FontWeight.Bold)
         }
 
@@ -93,7 +99,7 @@ fun ProfileScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // 4. المقاييس الحيوية (جلب البيانات الحقيقية)
+        // 4. المقاييس الحيوية
         Text(text = stringResource(id = R.string.vital_metrics), color = TextWhite, fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -110,14 +116,63 @@ fun ProfileScreen() {
 
         // 5. قائمة الحساب والنشاط
         ProfileOptionItem(icon = Icons.Default.Edit, title = stringResource(id = R.string.edit_profile))
+
+        // رجّعت الإحصائيات الأسبوعية هنا
         ProfileOptionItem(icon = Icons.Default.BarChart, title = stringResource(id = R.string.weekly_stats))
-        ProfileOptionItem(icon = Icons.Default.Settings, title = stringResource(id = R.string.settings_profile))
-        ProfileOptionItem(icon = Icons.AutoMirrored.Filled.Logout, title = stringResource(id = R.string.logout), tint = Color.Red)
+
+        ProfileOptionItem(
+            icon = Icons.Default.Settings,
+            title = stringResource(id = R.string.settings_profile),
+            onClick = { showLanguageDialog = true }
+        )
+
+        // زر تسجيل الخروج المعدّل
+        ProfileOptionItem(
+            icon = Icons.AutoMirrored.Filled.Logout,
+            title = stringResource(id = R.string.logout),
+            tint = Color.Red,
+            onClick = {
+                // الرجوع لشاشة تسجيل الدخول ومسح كل الشاشات اللي قبلها
+                navController.navigate("login") {
+                    popUpTo("splash") { inclusive = true }
+                }
+            }
+        )
+    }
+
+    // نافذة تغيير اللغة
+    if (showLanguageDialog) {
+        AlertDialog(
+            onDismissRequest = { showLanguageDialog = false },
+            title = { Text(text = stringResource(id = R.string.select_language), color = TextWhite) },
+            text = {
+                Column {
+                    TextButton(onClick = {
+                        LocaleHelper.saveLanguage(context, "en")
+                        LocaleHelper.setLocale(context, "en")
+                        (context as? Activity)?.recreate()
+                        showLanguageDialog = false
+                    }) {
+                        Text(text = stringResource(id = R.string.english), color = TextWhite, fontSize = 18.sp)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    TextButton(onClick = {
+                        LocaleHelper.saveLanguage(context, "ar")
+                        LocaleHelper.setLocale(context, "ar")
+                        (context as? Activity)?.recreate()
+                        showLanguageDialog = false
+                    }) {
+                        Text(text = stringResource(id = R.string.arabic), color = PrimaryOrange, fontSize = 18.sp)
+                    }
+                }
+            },
+            confirmButton = {},
+            containerColor = DarkSurface
+        )
     }
 }
 
-
-// بطاقات النشاط - خط واحد برتقالي يملى حسب الرقم
+// بطاقات النشاط
 @Composable
 fun StatCard(title: String, value: String, progress: Float, modifier: Modifier = Modifier) {
     Card(
@@ -131,20 +186,19 @@ fun StatCard(title: String, value: String, progress: Float, modifier: Modifier =
             Text(text = value, color = TextWhite, fontSize = 24.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
 
-            // رسم الخط يدوياً عشان يطلع خط واحد بس بدون خلفية رمادية
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(6.dp) // سماكة الخط
+                    .height(6.dp)
                     .clip(RoundedCornerShape(3.dp))
-                    .background(TextGray.copy(alpha = 0.3f)) // لون الخط الفارغ (رمادي خفيف)
+                    .background(TextGray.copy(alpha = 0.3f))
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .fillMaxWidth(progress) // مقدار الامتلاء (من 0.0f إلى 1.0f)
+                        .fillMaxWidth(progress)
                         .clip(RoundedCornerShape(3.dp))
-                        .background(Color(0xFFFC9B7F)) // لون الخط المعبأ (برتقالي)
+                        .background(Color(0xFFFC9B7F))
                 )
             }
         }
@@ -172,15 +226,21 @@ fun MetricCard(title: String, value: String, modifier: Modifier = Modifier) {
 
 // عناصر القائمة
 @Composable
-fun ProfileOptionItem(icon: androidx.compose.ui.graphics.vector.ImageVector, title: String, tint: Color = TextWhite) {
+fun ProfileOptionItem(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    title: String,
+    tint: Color = TextWhite,
+    onClick: () -> Unit = {}
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp),
+            .padding(vertical = 12.dp)
+            .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(icon, contentDescription = title, tint = tint, modifier = Modifier.size(24.dp))
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = title, color = tint, fontSize =16.sp, fontWeight = FontWeight.Medium)
+        Text(text = title, color = tint, fontSize = 16.sp, fontWeight = FontWeight.Medium)
     }
 }

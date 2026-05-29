@@ -145,5 +145,21 @@ Drink water regularly during the workout to maintain performance and avoid dehyd
     <string name="wed">Wed</string>
     <string name="thu">Thu</string>
     <string name="fri">Fri</string>
+    <!-- Log Screen -->
+    <string name="exercise_log_this_month">Exercise Log </string>
+    <string name="october_2026">October 2026</string>
+    <string name="sunday">Sun</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="log_date_1">Thu, 5 Oct 2026, 8:30 AM</string>
+    <string name="log_date_2">Fri, 3 Oct 2026, 7:45 AM</string>
+    <string name="log_date_3">Wed, 1 Oct 2026, 8:00 PM</string>
+    <string name="kcal">%1$s kcal</string>
+    <string name="minutes">%1$s minutes</string>
+    <string name="view_details">View Details</string>
 
 </resources>

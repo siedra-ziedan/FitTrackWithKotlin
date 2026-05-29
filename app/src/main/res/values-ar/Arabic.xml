@@ -136,5 +136,20 @@
     <string name="wed">الأربعاء</string>
     <string name="thu">الخميس</string>
     <string name="fri">الجمعة</string>
-
+    <!-- Log Screen -->
+    <string name="exercise_log_this_month">سجل التمارين </string>
+    <string name="october_2026">أكتوبر ٢٠٢٦</string>
+    <string name="sunday">أحد</string>
+    <string name="monday">إثنين</string>
+    <string name="tuesday">ثلاثاء</string>
+    <string name="wednesday">أربعاء</string>
+    <string name="thursday">خميس</string>
+    <string name="friday">جمعة</string>
+    <string name="saturday">سبت</string>
+    <string name="log_date_1">الخميس، ٥ أكتوبر ٢٠٢٦، ٨:٣٠ ص</string>
+    <string name="log_date_2">الجمعة، ٣ أكتوبر ٢٠٢٦، ٧:٤٥ ص</string>
+    <string name="log_date_3">الأربعاء، ١ أكتوبر ٢٠٢٦، ٨:٠٠ م</string>
+    <string name="kcal">%1$s سعرة</string>
+    <string name="minutes">%1$s دقيقة</string>
+    <string name="view_details">عرض التفاصيل</string>
 </resources>

@@ -242,17 +242,10 @@ fun FilterScreen(navController: NavController) {
                     }
                 }
                 3 -> { // تبويب Log
-                    Spacer(modifier = Modifier.height(100.dp))
-                    Text(
-                        text = stringResource(id = R.string.coming_soon),
-                        color = TextGray,
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    LogScreen()
                 }
                 4 -> { // تبويب Profile
-                    ProfileScreen()
+                    ProfileScreen(navController = navController)
                 }
             }
         }

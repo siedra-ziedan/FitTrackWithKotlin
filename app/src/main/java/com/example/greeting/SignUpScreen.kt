@@ -38,6 +38,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.greeting.R // <--- مهم جداً إضافة هاد السطر
 import com.example.greeting.ui.theme.DarkSurface
 import com.example.greeting.ui.theme.PrimaryOrange
 import com.example.greeting.ui.theme.TextGray
