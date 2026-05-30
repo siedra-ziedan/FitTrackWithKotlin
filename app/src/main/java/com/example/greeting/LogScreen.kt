@@ -85,7 +85,7 @@ fun LogScreen(navController: NavController) { // <-- إضافة navController ه
 
         item {
             LogWorkoutCard(
-                imageRes = R.drawable.runn,
+                imageRes = R.drawable.run,
                 title = stringResource(id = R.string.workout_running),
                 date = stringResource(id = R.string.log_date_2),
                 calories = "330",
