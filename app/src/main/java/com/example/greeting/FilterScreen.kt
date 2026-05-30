@@ -242,7 +242,7 @@ fun FilterScreen(navController: NavController) {
                     }
                 }
                 3 -> { // تبويب Log
-                    LogScreen()
+                    LogScreen(navController = navController)
                 }
                 4 -> { // تبويب Profile
                     ProfileScreen(navController = navController)

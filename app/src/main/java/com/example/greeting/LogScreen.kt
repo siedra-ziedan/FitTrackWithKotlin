@@ -8,8 +8,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowBack // <-- تعديل الأيقونة
+import androidx.compose.material.icons.automirrored.filled.ArrowForward // <-- تعديل الأيقونة
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,10 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController // <-- إضافة استيراد الـ NavController
 import com.example.greeting.ui.theme.*
 
 @Composable
-fun LogScreen() {
+fun LogScreen(navController: NavController) { // <-- إضافة navController هنا
     var selectedDay by remember { mutableIntStateOf(5) }
 
     LazyColumn(
@@ -69,36 +70,39 @@ fun LogScreen() {
             Spacer(modifier = Modifier.height(16.dp))
         }
 
-        // 4. بطاقات التمارين
+        // 4. بطاقات التمارين (تم إضافة navController لكل واحد)
         item {
             LogWorkoutCard(
                 imageRes = R.drawable.jump,
                 title = stringResource(id = R.string.workout_jumprope),
                 date = stringResource(id = R.string.log_date_1),
                 calories = "450",
-                duration = "30"
+                duration = "30",
+                navController = navController
             )
         }
         item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
             LogWorkoutCard(
-                imageRes = R.drawable.runn, // تأكدي من اسم الصورة
+                imageRes = R.drawable.runn,
                 title = stringResource(id = R.string.workout_running),
                 date = stringResource(id = R.string.log_date_2),
                 calories = "330",
-                duration = "45"
+                duration = "45",
+                navController = navController
             )
         }
         item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
             LogWorkoutCard(
-                imageRes = R.drawable.hund, // تأكدي من اسم الصورة
+                imageRes = R.drawable.hund,
                 title = stringResource(id = R.string.workout_weightlifting),
                 date = stringResource(id = R.string.log_date_3),
                 calories = "550",
-                duration = "20"
+                duration = "20",
+                navController = navController
             )
         }
     }
@@ -118,7 +122,7 @@ fun CalendarCard(selectedDay: Int, onDaySelected: (Int) -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 IconButton(onClick = { }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Previous", tint = TextWhite)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Previous", tint = TextWhite) // <-- تعديل الأيقونة
                 }
                 Text(
                     text = stringResource(id = R.string.october_2026),
@@ -127,7 +131,7 @@ fun CalendarCard(selectedDay: Int, onDaySelected: (Int) -> Unit) {
                     fontWeight = FontWeight.Bold
                 )
                 IconButton(onClick = { }) {
-                    Icon(Icons.Default.ArrowForward, contentDescription = "Next", tint = TextWhite)
+                    Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next", tint = TextWhite) // <-- تعديل الأيقونة
                 }
             }
 
@@ -173,14 +177,16 @@ fun CalendarRow(days: List<Int>, selectedDay: Int, onDaySelected: (Int) -> Unit)
                     .weight(1f)
                     .size(36.dp)
                     .clip(CircleShape)
-                    .background(if (day == selectedDay) Color(0xFFFDA48F) else Color.Transparent)
+                    // هنا غيرنا اللون ليصير برتقالي فاتح شفاف
+                    .background(if (day == selectedDay) PrimaryOrange.copy(alpha = 0.3f) else Color.Transparent)
                     .clickable(enabled = day != 0) { onDaySelected(day) },
                 contentAlignment = Alignment.Center
             ) {
                 if (day != 0) {
                     Text(
                         text = day.toString(),
-                        color = if (day == selectedDay) Color.White else TextWhite,
+                        // غيرنا لون الخط ليصير برتقالي غامق عشان يبان على الخلفية الفاتحة
+                        color = if (day == selectedDay) PrimaryOrange else TextWhite,
                         fontSize = 14.sp,
                         fontWeight = if (day == selectedDay) FontWeight.Bold else FontWeight.Normal
                     )
@@ -191,7 +197,7 @@ fun CalendarRow(days: List<Int>, selectedDay: Int, onDaySelected: (Int) -> Unit)
 }
 
 @Composable
-fun LogWorkoutCard(imageRes: Int, title: String, date: String, calories: String, duration: String) {
+fun LogWorkoutCard(imageRes: Int, title: String, date: String, calories: String, duration: String, navController: NavController) { // <-- إضافة navController هنا
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -213,12 +219,10 @@ fun LogWorkoutCard(imageRes: Int, title: String, date: String, calories: String,
                 contentScale = ContentScale.Crop
             )
 
-            // مسافة بدل الخط العمودي
             Spacer(modifier = Modifier.width(12.dp))
 
             // تفاصيل التمرين
             Column(modifier = Modifier.weight(1f)) {
-                // الصف الأول: الاسم والسعرات (تم تكبير خط الاسم شوي)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -230,12 +234,10 @@ fun LogWorkoutCard(imageRes: Int, title: String, date: String, calories: String,
 
                 Spacer(modifier = Modifier.height(2.dp))
 
-                // التاريخ
                 Text(text = date, color = TextGray, fontSize = 10.sp)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // الخط الأفقي الفاصل
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -245,27 +247,27 @@ fun LogWorkoutCard(imageRes: Int, title: String, date: String, calories: String,
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // الصف الأخير: زر التفاصيل والمدة
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // زر عرض التفاصيل (مستطيل اورنج معبأ ونص ابيض)
+                    // زر عرض التفاصيل مربوط بالتنقل
                     Button(
-                        onClick = { /* التنقل لتفاصيل التمرين */ },
+                        onClick = {
+                            navController.navigate("details") // <-- الربط هنا
+                        },
                         modifier = Modifier.height(24.dp),
                         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
                         shape = RoundedCornerShape(4.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = PrimaryOrange, // لون الخلفية برتقالي
-                            contentColor = Color.White // لون النص أبيض
+                            containerColor = PrimaryOrange,
+                            contentColor = Color.White
                         )
                     ) {
                         Text(text = stringResource(id = R.string.view_details), fontSize = 9.sp, fontWeight = FontWeight.Bold)
                     }
 
-                    // المدة
                     Text(text = stringResource(id = R.string.minutes, duration), color = TextGray, fontSize = 10.sp)
                 }
             }
