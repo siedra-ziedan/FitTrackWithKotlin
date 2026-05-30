@@ -21,8 +21,8 @@ object LocaleHelper {
     private const val LANGUAGE_KEY = "app_language"
     private const val HEIGHT_KEY = "user_height"
     private const val WEIGHT_KEY = "user_weight"
-    private const val USERNAME_KEY = "user_username" // جديد
-    private const val AGE_KEY = "user_age"           // جديد
+    private const val USERNAME_KEY = "user_username"
+    private const val AGE_KEY = "user_age"
     private const val DAILY_GOAL_KEY = "daily_goal"
     private const val CURRENT_PROGRESS_KEY = "current_progress"
     fun saveLanguage(context: Context, language: String) {

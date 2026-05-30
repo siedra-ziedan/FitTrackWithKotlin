@@ -27,11 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController // <-- إضافة استيراد الـ NavController
+import androidx.navigation.NavController
 import com.example.greeting.ui.theme.*
 
 @Composable
-fun LogScreen(navController: NavController) { // <-- إضافة navController هنا
+fun LogScreen(navController: NavController) {
     var selectedDay by remember { mutableIntStateOf(5) }
 
     LazyColumn(

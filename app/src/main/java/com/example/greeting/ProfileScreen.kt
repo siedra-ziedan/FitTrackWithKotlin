@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController // <--- ضفتي هاد الاستيراد المهم
+import androidx.navigation.NavController
 import com.example.greeting.ui.theme.*
 
 @Composable
@@ -117,7 +117,7 @@ fun ProfileScreen(navController: NavController) {
         // 5. قائمة الحساب والنشاط
         ProfileOptionItem(icon = Icons.Default.Edit, title = stringResource(id = R.string.edit_profile))
 
-        // رجّعت الإحصائيات الأسبوعية هنا
+
         ProfileOptionItem(icon = Icons.Default.BarChart, title = stringResource(id = R.string.weekly_stats))
 
         ProfileOptionItem(
@@ -126,7 +126,7 @@ fun ProfileScreen(navController: NavController) {
             onClick = { showLanguageDialog = true }
         )
 
-        // زر تسجيل الخروج المعدّل
+        // زر تسجيل الخروج
         ProfileOptionItem(
             icon = Icons.AutoMirrored.Filled.Logout,
             title = stringResource(id = R.string.logout),
