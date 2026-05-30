@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,7 +51,10 @@ fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var checked by remember { mutableStateOf(true) }
+
+    // جلب نصوص الأخطاء من strings.xml
     val emptyError = stringResource(id = R.string.error_empty_fields)
+    val emailError = stringResource(id = R.string.error_invalid_email)
 
     Column(
         modifier = Modifier
@@ -121,10 +123,16 @@ fun LoginScreen(navController: NavController) {
 
         Button(
             onClick = {
+                // 1. التحقق من أن الحقول ليست فارغة
                 if (email.isBlank() || password.isBlank()) {
                     Toast.makeText(context, emptyError, Toast.LENGTH_SHORT).show()
-                } else {
-                    // التعديل هنا: التوجيه لشاشة التبويبات ومنع الرجوع
+                }
+                // 2. التحقق من أن الإيميل ينتهي بـ @gmail.com وطوله أكبر من 10 أحرف
+                else if (!email.trim().endsWith("@gmail.com") || email.trim().length <= 10) {
+                    Toast.makeText(context, emailError, Toast.LENGTH_SHORT).show()
+                }
+                // 3. إذا نجح التحقق، انتقل للشاشة الرئيسية
+                else {
                     navController.navigate("main_app") {
                         popUpTo("splash") { inclusive = true }
                     }

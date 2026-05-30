@@ -114,15 +114,6 @@ fun FilterScreen(navController: NavController) {
                 containerColor = DarkSurface,
                 contentColor = PrimaryOrange
             ) {
-                // 1. Dashboard (يحوي احصائيات اسبوعية للتمارين والوزن الحالي والمستهدف)
-                NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Dashboard, contentDescription = null) },
-                    label = { Text(stringResource(id = R.string.menu_dashboard)) },
-                    selected = selectedItem == 0,
-                    onClick = { selectedItem = 0 },
-                    colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
-                )
-                // 2. My Exercises (يحتوي على الفلترة والتمارين)
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.FitnessCenter, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_my_exercises)) },
@@ -130,7 +121,14 @@ fun FilterScreen(navController: NavController) {
                     onClick = { selectedItem = 1 },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
-                // 3. Favorites
+                NavigationBarItem(
+                    icon = { Icon(Icons.Filled.Dashboard, contentDescription = null) },
+                    label = { Text(stringResource(id = R.string.menu_dashboard)) },
+                    selected = selectedItem == 0,
+                    onClick = { selectedItem = 0 },
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
+                )
+
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_favorites)) },
@@ -138,7 +136,6 @@ fun FilterScreen(navController: NavController) {
                     onClick = { selectedItem = 2 },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
-                // 4. Log
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.DateRange, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_log)) },
@@ -146,7 +143,6 @@ fun FilterScreen(navController: NavController) {
                     onClick = { selectedItem = 3 },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = PrimaryOrange, selectedTextColor = PrimaryOrange, unselectedIconColor = TextGray, unselectedTextColor = TextGray)
                 )
-                // 5. Profile
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Person, contentDescription = null) },
                     label = { Text(stringResource(id = R.string.menu_profile)) },
@@ -158,17 +154,15 @@ fun FilterScreen(navController: NavController) {
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(top = 12.dp )
+            modifier = Modifier
                 .fillMaxSize()
                 .background(DarkBackground)
-                .padding(top = 8.dp,
-                bottom = paddingValues.calculateBottomPadding())
+                .padding(paddingValues)
                 .padding(16.dp)
         ) {
             when (selectedItem) {
-                0 -> { DashboardScreen()
-                }
-                1 -> { // تبويب My Exercises (نقلنا له كل الفلترة والتمارين)
+                0 -> { DashboardScreen() }
+                1 -> {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -204,13 +198,13 @@ fun FilterScreen(navController: NavController) {
                             WorkoutCard(
                                 workout = workout,
                                 isFavorite = favoriteWorkouts.contains(workout),
-                                onToggleFavorite = { toggleFavorite(workout)},
-                                navController=navController
+                                onToggleFavorite = { toggleFavorite(workout) },
+                                navController = navController
                             )
                         }
                     }
                 }
-                2 -> { // تبويب Favorites
+                2 -> {
                     Text(
                         text = stringResource(id = R.string.my_favorites),
                         fontSize = 28.sp,
@@ -235,23 +229,21 @@ fun FilterScreen(navController: NavController) {
                                     workout = workout,
                                     isFavorite = true,
                                     onToggleFavorite = { toggleFavorite(workout) },
-                                    navController=navController
+                                    navController = navController
                                 )
                             }
                         }
                     }
                 }
-                3 -> { // تبويب Log
-                    LogScreen(navController = navController)
-                }
-                4 -> { // تبويب Profile
-                    ProfileScreen(navController = navController)
-                }
+                3 -> { LogScreen(navController = navController) }
+                4 -> { ProfileScreen(navController = navController) }
             }
         }
 
-        // نافذة تغيير اللغة
+        // نافذة تغيير اللغة (معدلة لعرض اللون الديناميكي)
         if (showLanguageDialog) {
+            val currentLanguage = LocaleHelper.getLanguage(context)
+
             AlertDialog(
                 onDismissRequest = { showLanguageDialog = false },
                 title = { Text(text = stringResource(id = R.string.select_language), color = TextWhite) },
@@ -263,7 +255,12 @@ fun FilterScreen(navController: NavController) {
                             (context as? Activity)?.recreate()
                             showLanguageDialog = false
                         }) {
-                            Text(text = stringResource(id = R.string.english), color = TextWhite, fontSize = 18.sp)
+                            Text(
+                                text = stringResource(id = R.string.english),
+                                color = if (currentLanguage == "en") PrimaryOrange else TextWhite,
+                                fontSize = 18.sp,
+                                fontWeight = if (currentLanguage == "en") FontWeight.Bold else FontWeight.Normal
+                            )
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         TextButton(onClick = {
@@ -272,7 +269,12 @@ fun FilterScreen(navController: NavController) {
                             (context as? Activity)?.recreate()
                             showLanguageDialog = false
                         }) {
-                            Text(text = stringResource(id = R.string.arabic), color = PrimaryOrange, fontSize = 18.sp)
+                            Text(
+                                text = stringResource(id = R.string.arabic),
+                                color = if (currentLanguage == "ar") PrimaryOrange else TextWhite,
+                                fontSize = 18.sp,
+                                fontWeight = if (currentLanguage == "ar") FontWeight.Bold else FontWeight.Normal
+                            )
                         }
                     }
                 },
@@ -284,7 +286,7 @@ fun FilterScreen(navController: NavController) {
 }
 
 @Composable
-fun WorkoutCard(workout: WorkoutItem,isFavorite: Boolean,onToggleFavorite: () -> Unit,navController: NavController) {
+fun WorkoutCard(workout: WorkoutItem, isFavorite: Boolean, onToggleFavorite: () -> Unit, navController: NavController) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -323,12 +325,7 @@ fun WorkoutCard(workout: WorkoutItem,isFavorite: Boolean,onToggleFavorite: () ->
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                IconButton(
-                    onClick = {
-                        navController.navigate("details")
-                    }
-                ) {
-
+                IconButton(onClick = { navController.navigate("details") }) {
                     Icon(
                         imageVector = Icons.Default.PlayArrow,
                         contentDescription = "Play",
