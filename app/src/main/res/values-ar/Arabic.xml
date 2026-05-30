@@ -136,10 +136,13 @@
     <string name="wed">الأربعاء</string>
     <string name="thu">الخميس</string>
     <string name="fri">الجمعة</string>
-    <string name="daily_goal">الهدف</string>
+    <string name="daily_goal">الهدف اليومي</string>
     <string name="goal_completed">تم تحقيق الهدف 🎉</string>
     <string name="great_progress">تقدم رائع 🔥</string>
     <string name="keep_pushing">استمر 💪</string>
+    <string name="today_burned_calories">
+    السعرات المحروقة اليوم
+</string>
     <!-- Log Screen -->
     <string name="exercise_log_this_month">سجل التمارين </string>
     <string name="october_2026">أكتوبر ٢٠٢٦</string>

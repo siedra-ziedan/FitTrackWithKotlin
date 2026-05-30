@@ -229,7 +229,7 @@ fun CompleteProfileScreen(navController: NavController) {
                 // تحقق إن المستخدم حط وزن
                 if (currentWeight.isBlank()) {
                     Toast.makeText(context, "Please enter your current weight", Toast.LENGTH_SHORT).show()
-                } else {
+                } else {//من اجل حساب الهدف اليومي
                     val calculatedGoal = when {
 
                         currentWeight.toInt() >= 100 -> 900

@@ -40,7 +40,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.ui.graphics.Brush
 @Composable
 fun DashboardScreen() {
@@ -55,8 +54,8 @@ fun DashboardScreen() {
     val currentWeight =
         LocaleHelper.getWeight(context).ifEmpty { "78.5" }
 
-    val caloriesBurned = 1240
-    val caloriesGoal = 1580
+    val caloriesBurned = 420
+    val caloriesGoal =  LocaleHelper.getDailyGoal(context).toInt()
     val remaining = caloriesGoal - caloriesBurned
 
     Column(
@@ -135,7 +134,7 @@ fun DashboardScreen() {
 
         Spacer(modifier = Modifier.height(20.dp))
         //Daily Goal
-        GoalCard()
+        DailyGoalCard()
 
         Spacer(modifier = Modifier.height(16.dp))
         // WEEK ACTIVITY
@@ -220,7 +219,7 @@ fun DashboardScreen() {
 }
 
 @Composable
-fun GoalCard() {
+fun DailyGoalCard() {
     val context = LocalContext.current
 
     val goal =
@@ -402,9 +401,9 @@ fun MainCaloriesCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "${stringResource(id = R.string.goal)}: $goal",
+                text = stringResource(id = R.string.today_burned_calories),
                 color = TextGray,
-                fontSize = 18.sp
+                fontSize = 16.sp
             )
         }
     }
